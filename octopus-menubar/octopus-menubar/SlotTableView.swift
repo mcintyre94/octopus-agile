@@ -1,4 +1,13 @@
 import SwiftUI
+#if os(macOS)
+import AppKit
+private let platformBackgroundColor = Color(nsColor: .controlBackgroundColor)
+private let platformSeparatorColor  = NSColor.separatorColor
+#else
+import UIKit
+private let platformBackgroundColor = Color(uiColor: .secondarySystemGroupedBackground)
+private let platformSeparatorColor  = UIColor.separator
+#endif
 
 struct SlotTableView: View {
     let slots: [PriceSlot]
@@ -67,11 +76,11 @@ struct SlotTableView: View {
                 }
             }
         }
-        .background(Color(nsColor: .controlBackgroundColor))
+        .background(platformBackgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(Color(nsColor: .separatorColor), lineWidth: 0.5)
+                .stroke(Color(platformSeparatorColor), lineWidth: 0.5)
         )
     }
 }

@@ -80,6 +80,7 @@ struct ChartView: View {
                 }
             }
         }
+        #if os(macOS)
         .chartOverlay { proxy in
             GeometryReader { geometry in
                 let plotOrigin = geometry[proxy.plotAreaFrame].origin
@@ -121,5 +122,6 @@ struct ChartView: View {
                 }
             }
         }
+        #endif
     }
 }

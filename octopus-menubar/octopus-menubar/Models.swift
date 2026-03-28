@@ -30,7 +30,7 @@ enum Region: String, CaseIterable, Identifiable {
         case .a: return "A – Eastern England"
         case .b: return "B – East Midlands"
         case .c: return "C – London"
-        case .d: return "D – Merseyside & N. Wales"
+        case .d: return "D – Merseyside & N. Wales" I think this sc
         case .e: return "E – Midlands"
         case .f: return "F – North Eastern"
         case .g: return "G – North Western"
