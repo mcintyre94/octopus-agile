@@ -80,13 +80,13 @@ struct ChartView: View {
                 }
             }
         }
-        #if os(macOS)
         .chartOverlay { proxy in
             GeometryReader { geometry in
                 let plotOrigin = geometry[proxy.plotAreaFrame].origin
                 Rectangle()
                     .fill(.clear)
                     .contentShape(Rectangle())
+                #if os(macOS)
                     .onContinuousHover { phase in
                         switch phase {
                         case .active(let location):
@@ -99,6 +99,19 @@ struct ChartView: View {
                             hoveredIndex = nil
                         }
                     }
+                #else
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
+                                let adjustedX = value.location.x - plotOrigin.x
+                                if let idx: Int = proxy.value(atX: adjustedX),
+                                   idx >= 0, idx < slots.count {
+                                    hoveredIndex = idx
+                                }
+                            }
+                            .onEnded { _ in hoveredIndex = nil }
+                    )
+                #endif
 
                 if let idx = hoveredIndex, idx < slots.count {
                     let slot = slots[idx]
@@ -122,6 +135,5 @@ struct ChartView: View {
                 }
             }
         }
-        #endif
     }
 }

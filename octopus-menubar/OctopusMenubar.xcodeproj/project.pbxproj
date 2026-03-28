@@ -6,14 +6,96 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F267D0692F785FE9005C2452 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F267D0682F785FE9005C2452 /* WidgetKit.framework */; };
+		F267D06B2F785FE9005C2452 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F267D06A2F785FE9005C2452 /* SwiftUI.framework */; };
+		F267D0782F785FE9005C2452 /* OctopusWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F267D0662F785FE9005C2452 /* OctopusWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F267D0762F785FE9005C2452 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F267D02D2F783950005C2452 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F267D0652F785FE9005C2452;
+			remoteInfo = OctopusWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F267D07D2F785FE9005C2452 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F267D0782F785FE9005C2452 /* OctopusWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F267D0352F783950005C2452 /* OctopusMenubar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OctopusMenubar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F267D0552F785F7E005C2452 /* OctopusIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OctopusIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F267D0662F785FE9005C2452 /* OctopusWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OctopusWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F267D0682F785FE9005C2452 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		F267D06A2F785FE9005C2452 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		F267D0922F786210005C2452 /* OctopusIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctopusIOSApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F267D0792F785FE9005C2452 /* Exceptions for "OctopusWidget" folder in "OctopusWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F267D0652F785FE9005C2452 /* OctopusWidgetExtension */;
+		};
+		F267D0872F786093005C2452 /* Exceptions for "octopus-menubar" folder in "OctopusIOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ChartView.swift,
+				MenuBarView.swift,
+				Models.swift,
+				OctopusService.swift,
+				PriceViewModel.swift,
+				SlotTableView.swift,
+			);
+			target = F267D0542F785F7E005C2452 /* OctopusIOS */;
+		};
+		F267D08A2F7860B4005C2452 /* Exceptions for "octopus-menubar" folder in "OctopusWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models.swift,
+				OctopusService.swift,
+			);
+			target = F267D0652F785FE9005C2452 /* OctopusWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F267D0372F783950005C2452 /* octopus-menubar */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F267D0872F786093005C2452 /* Exceptions for "octopus-menubar" folder in "OctopusIOS" target */,
+				F267D08A2F7860B4005C2452 /* Exceptions for "octopus-menubar" folder in "OctopusWidgetExtension" target */,
+			);
 			path = "octopus-menubar";
+			sourceTree = "<group>";
+		};
+		F267D0562F785F7E005C2452 /* OctopusIOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = OctopusIOS;
+			sourceTree = "<group>";
+		};
+		F267D06C2F785FE9005C2452 /* OctopusWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F267D0792F785FE9005C2452 /* Exceptions for "OctopusWidget" folder in "OctopusWidgetExtension" target */,
+			);
+			path = OctopusWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,13 +108,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F267D0522F785F7E005C2452 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F267D0632F785FE9005C2452 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F267D06B2F785FE9005C2452 /* SwiftUI.framework in Frameworks */,
+				F267D0692F785FE9005C2452 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		F267D02C2F783950005C2452 = {
 			isa = PBXGroup;
 			children = (
+				F267D0922F786210005C2452 /* OctopusIOSApp.swift */,
 				F267D0372F783950005C2452 /* octopus-menubar */,
+				F267D0562F785F7E005C2452 /* OctopusIOS */,
+				F267D06C2F785FE9005C2452 /* OctopusWidget */,
+				F267D0672F785FE9005C2452 /* Frameworks */,
 				F267D0362F783950005C2452 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +143,19 @@
 			isa = PBXGroup;
 			children = (
 				F267D0352F783950005C2452 /* OctopusMenubar.app */,
+				F267D0552F785F7E005C2452 /* OctopusIOS.app */,
+				F267D0662F785FE9005C2452 /* OctopusWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F267D0672F785FE9005C2452 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F267D0682F785FE9005C2452 /* WidgetKit.framework */,
+				F267D06A2F785FE9005C2452 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -70,6 +183,52 @@
 			productReference = F267D0352F783950005C2452 /* OctopusMenubar.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F267D0542F785F7E005C2452 /* OctopusIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F267D05D2F785F7F005C2452 /* Build configuration list for PBXNativeTarget "OctopusIOS" */;
+			buildPhases = (
+				F267D0512F785F7E005C2452 /* Sources */,
+				F267D0522F785F7E005C2452 /* Frameworks */,
+				F267D0532F785F7E005C2452 /* Resources */,
+				F267D07D2F785FE9005C2452 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F267D0772F785FE9005C2452 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F267D0562F785F7E005C2452 /* OctopusIOS */,
+			);
+			name = OctopusIOS;
+			packageProductDependencies = (
+			);
+			productName = OctopusIOS;
+			productReference = F267D0552F785F7E005C2452 /* OctopusIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F267D0652F785FE9005C2452 /* OctopusWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F267D07A2F785FE9005C2452 /* Build configuration list for PBXNativeTarget "OctopusWidgetExtension" */;
+			buildPhases = (
+				F267D0622F785FE9005C2452 /* Sources */,
+				F267D0632F785FE9005C2452 /* Frameworks */,
+				F267D0642F785FE9005C2452 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F267D06C2F785FE9005C2452 /* OctopusWidget */,
+			);
+			name = OctopusWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = OctopusWidgetExtension;
+			productReference = F267D0662F785FE9005C2452 /* OctopusWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -81,6 +240,12 @@
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					F267D0342F783950005C2452 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					F267D0542F785F7E005C2452 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					F267D0652F785FE9005C2452 = {
 						CreatedOnToolsVersion = 26.4;
 					};
 				};
@@ -100,12 +265,28 @@
 			projectRoot = "";
 			targets = (
 				F267D0342F783950005C2452 /* OctopusMenubar */,
+				F267D0542F785F7E005C2452 /* OctopusIOS */,
+				F267D0652F785FE9005C2452 /* OctopusWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F267D0332F783950005C2452 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F267D0532F785F7E005C2452 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F267D0642F785FE9005C2452 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +303,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F267D0512F785F7E005C2452 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F267D0622F785FE9005C2452 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F267D0772F785FE9005C2452 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F267D0652F785FE9005C2452 /* OctopusWidgetExtension */;
+			targetProxy = F267D0762F785FE9005C2452 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F267D03E2F783950005C2452 /* Debug */ = {
@@ -329,6 +532,140 @@
 			};
 			name = Release;
 		};
+		F267D05E2F785F7F005C2452 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 79X2Z5TT45;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.callum.OctopusIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F267D05F2F785F7F005C2452 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 79X2Z5TT45;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.callum.OctopusIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F267D07B2F785FE9005C2452 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 79X2Z5TT45;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OctopusWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OctopusWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.callum.OctopusIOS.OctopusWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F267D07C2F785FE9005C2452 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 79X2Z5TT45;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OctopusWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OctopusWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.callum.OctopusIOS.OctopusWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -346,6 +683,24 @@
 			buildConfigurations = (
 				F267D0412F783950005C2452 /* Debug */,
 				F267D0422F783950005C2452 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F267D05D2F785F7F005C2452 /* Build configuration list for PBXNativeTarget "OctopusIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F267D05E2F785F7F005C2452 /* Debug */,
+				F267D05F2F785F7F005C2452 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F267D07A2F785FE9005C2452 /* Build configuration list for PBXNativeTarget "OctopusWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F267D07B2F785FE9005C2452 /* Debug */,
+				F267D07C2F785FE9005C2452 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

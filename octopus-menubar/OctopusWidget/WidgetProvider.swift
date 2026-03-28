@@ -10,13 +10,13 @@ struct WidgetProvider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: RegionAppIntent, in context: Context) async -> PriceEntry {
-        let region = Region(rawValue: configuration.regionCode) ?? .c
+        let region = configuration.region ?? .c
         let slots = (try? await OctopusService.shared.fetchSlots(region: region, date: Date())) ?? []
         return makeEntry(slots: slots, index: currentSlotIndex(in: slots), region: region, error: nil)
     }
 
     func timeline(for configuration: RegionAppIntent, in context: Context) async -> Timeline<PriceEntry> {
-        let region = Region(rawValue: configuration.regionCode) ?? .c
+        let region = configuration.region ?? .c
         do {
             let slots = try await OctopusService.shared.fetchSlots(region: region, date: Date())
             // One entry per slot so WidgetKit advances automatically every 30 min
