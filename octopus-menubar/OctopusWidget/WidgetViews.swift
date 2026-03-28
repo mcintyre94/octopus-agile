@@ -41,7 +41,7 @@ struct SmallWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(entry.region.displayName.components(separatedBy: "–").last?.trimmingCharacters(in: .whitespaces) ?? entry.region.rawValue)
+            Text(entry.region.shortName)
                 .font(.caption2)
                 .foregroundStyle(.secondary)
 
@@ -109,7 +109,7 @@ struct MediumWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text(entry.region.displayName)
+                Text(entry.region.shortName)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -198,7 +198,7 @@ struct LargeWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text(entry.region.displayName)
+                Text(entry.region.shortName)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()

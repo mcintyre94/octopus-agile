@@ -44,6 +44,10 @@ enum Region: String, CaseIterable, Identifiable {
         }
     }
 
+    var shortName: String {
+        displayName.components(separatedBy: " – ").last ?? displayName
+    }
+
     var tariffCode: String {
         "E-1R-AGILE-24-10-01-\(rawValue)"
     }

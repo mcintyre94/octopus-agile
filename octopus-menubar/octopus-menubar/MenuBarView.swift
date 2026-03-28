@@ -113,6 +113,7 @@ struct DayView: View {
                             .padding(.horizontal, 12)
                             .padding(.top, 12)
 
+                        #if os(macOS)
                         tableToggleButton
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
@@ -122,6 +123,11 @@ struct DayView: View {
                                 .padding(.horizontal, 12)
                                 .padding(.bottom, 12)
                         }
+                        #else
+                        SlotTableView(slots: slots, currentSlotIndex: currentSlotIndex)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 12)
+                        #endif
                     }
                 }
                 .frame(maxHeight: 620)
