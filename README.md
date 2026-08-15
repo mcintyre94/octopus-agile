@@ -23,6 +23,7 @@ A macOS menubar app and iOS app that shows [Octopus Energy Agile](https://octopu
 - Price table listing all 48 slots
 - Region picker for all 14 UK DNO regions (A–P)
 - iOS home screen widget in small, medium, and large sizes with configurable region
+- Widgets roll forward once tomorrow's prices are published (usually around 4pm): the graph switches from midnight-to-midnight today to the current slot through to the end of tomorrow, with the day change marked
 
 ## Requirements
 

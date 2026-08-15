@@ -20,24 +20,29 @@ struct OctopusWidgetEntryView: View {
     }
 }
 
+// MARK: - Formatters
+
+private let hourFormatter: DateFormatter = {
+    let f = DateFormatter(); f.dateFormat = "HH"; f.timeZone = .current; return f
+}()
+
+private let timeFormatter: DateFormatter = {
+    let f = DateFormatter(); f.dateFormat = "HH:mm"; f.timeZone = .current; return f
+}()
+
 // MARK: - Small
 
 struct SmallWidgetView: View {
     let entry: PriceEntry
 
-    private var currentSlot: PriceSlot? {
-        guard entry.currentIndex < entry.slots.count else { return nil }
-        return entry.slots[entry.currentIndex]
-    }
+    private var upcomingSlots: [PriceSlot] { entry.upcomingSlots(limit: 6) }
 
-    private var upcomingSlots: [PriceSlot] {
-        let start = min(entry.currentIndex + 1, entry.slots.count)
-        return Array(entry.slots[start...].prefix(6))
+    /// Position of the day change within the sparkline, when it falls inside it.
+    private var dayBreak: Int? {
+        guard let boundary = entry.tomorrowStartIndex else { return nil }
+        let offset = boundary - entry.upcomingStart
+        return upcomingSlots.indices.contains(offset) ? offset : nil
     }
-
-    private let timeFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "HH:mm"; f.timeZone = .current; return f
-    }()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -45,7 +50,7 @@ struct SmallWidgetView: View {
                 .font(.caption2)
                 .foregroundStyle(.secondary)
 
-            if let slot = currentSlot {
+            if let slot = entry.currentSlot {
                 Text(String(format: "%.2fp", slot.valueIncVat))
                     .font(.title)
                     .fontWeight(.bold)
@@ -64,7 +69,7 @@ struct SmallWidgetView: View {
 
             Spacer()
 
-            // Mini sparkline of next 6 slots
+            // Mini sparkline of the next 6 slots, which may run into tomorrow
             if !upcomingSlots.isEmpty {
                 Chart {
                     ForEach(Array(upcomingSlots.enumerated()), id: \.offset) { i, slot in
@@ -73,6 +78,11 @@ struct SmallWidgetView: View {
                             y: .value("p", slot.valueIncVat)
                         )
                         .foregroundStyle(PriceCategory.from(slot.valueIncVat).color.opacity(0.7))
+                    }
+                    if let dayBreak {
+                        RuleMark(x: .value("Tomorrow", dayBreak))
+                            .foregroundStyle(.secondary.opacity(0.6))
+                            .lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 2]))
                     }
                 }
                 .chartXAxis(.hidden)
@@ -90,22 +100,6 @@ struct SmallWidgetView: View {
 struct MediumWidgetView: View {
     let entry: PriceEntry
 
-    private var currentSlot: PriceSlot? {
-        guard entry.currentIndex < entry.slots.count else { return nil }
-        return entry.slots[entry.currentIndex]
-    }
-
-    private var axisIndices: [Int] { stride(from: 0, to: entry.slots.count, by: 8).map { $0 } }
-
-    private let hourFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "HH"; f.timeZone = .current; return f
-    }()
-
-    private var yDomain: ClosedRange<Double> {
-        let prices = entry.slots.map(\.valueIncVat)
-        return min(prices.min() ?? 0, 0)...max(prices.max() ?? 40, 5)
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
@@ -113,7 +107,7 @@ struct MediumWidgetView: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                 Spacer()
-                if let slot = currentSlot {
+                if let slot = entry.currentSlot {
                     Text(String(format: "Now: %.2fp", slot.valueIncVat))
                         .font(.caption2)
                         .fontWeight(.medium)
@@ -144,9 +138,14 @@ struct MediumWidgetView: View {
                             .foregroundStyle(.primary.opacity(0.4))
                             .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 2]))
                     }
+                    if let boundary = entry.tomorrowStartIndex {
+                        RuleMark(x: .value("Tomorrow", boundary))
+                            .foregroundStyle(.secondary.opacity(0.6))
+                            .lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 2]))
+                    }
                 }
                 .chartXAxis {
-                    AxisMarks(values: axisIndices) { value in
+                    AxisMarks(values: entry.axisIndices) { value in
                         AxisValueLabel {
                             if let i = value.as(Int.self), i < entry.slots.count {
                                 Text(hourFormatter.string(from: entry.slots[i].validFrom))
@@ -156,7 +155,7 @@ struct MediumWidgetView: View {
                     }
                 }
                 .chartYAxis(.hidden)
-                .chartYScale(domain: yDomain)
+                .chartYScale(domain: entry.yDomain)
                 .frame(maxHeight: .infinity)
             }
         }
@@ -170,30 +169,7 @@ struct MediumWidgetView: View {
 struct LargeWidgetView: View {
     let entry: PriceEntry
 
-    private var currentSlot: PriceSlot? {
-        guard entry.currentIndex < entry.slots.count else { return nil }
-        return entry.slots[entry.currentIndex]
-    }
-
-    private var upcomingSlots: [PriceSlot] {
-        let start = min(entry.currentIndex + 1, entry.slots.count)
-        return Array(entry.slots[start...].prefix(6))
-    }
-
-    private var axisIndices: [Int] { stride(from: 0, to: entry.slots.count, by: 8).map { $0 } }
-
-    private let hourFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "HH"; f.timeZone = .current; return f
-    }()
-
-    private let timeFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "HH:mm"; f.timeZone = .current; return f
-    }()
-
-    private var yDomain: ClosedRange<Double> {
-        let prices = entry.slots.map(\.valueIncVat)
-        return min(prices.min() ?? 0, 0)...max(prices.max() ?? 40, 5)
-    }
+    private var upcomingSlots: [PriceSlot] { entry.upcomingSlots(limit: 6) }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -202,7 +178,7 @@ struct LargeWidgetView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
-                if let slot = currentSlot {
+                if let slot = entry.currentSlot {
                     Text(String(format: "Now: %.2fp", slot.valueIncVat))
                         .font(.caption)
                         .fontWeight(.medium)
@@ -236,9 +212,17 @@ struct LargeWidgetView: View {
                                 Text("now").font(.system(size: 8)).foregroundStyle(.secondary)
                             }
                     }
+                    if let boundary = entry.tomorrowStartIndex {
+                        RuleMark(x: .value("Tomorrow", boundary))
+                            .foregroundStyle(.secondary.opacity(0.6))
+                            .lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 2]))
+                            .annotation(position: .top, alignment: .center) {
+                                Text("tomorrow").font(.system(size: 8)).foregroundStyle(.secondary)
+                            }
+                    }
                 }
                 .chartXAxis {
-                    AxisMarks(values: axisIndices) { value in
+                    AxisMarks(values: entry.axisIndices) { value in
                         AxisGridLine()
                         AxisValueLabel {
                             if let i = value.as(Int.self), i < entry.slots.count {
@@ -259,14 +243,23 @@ struct LargeWidgetView: View {
                         }
                     }
                 }
-                .chartYScale(domain: yDomain)
+                .chartYScale(domain: entry.yDomain)
                 .frame(height: 150)
 
                 Divider()
 
-                // Next upcoming slots
+                // Next upcoming slots, labelled where they cross into tomorrow
                 VStack(spacing: 0) {
-                    ForEach(Array(upcomingSlots.enumerated()), id: \.offset) { _, slot in
+                    ForEach(Array(upcomingSlots.enumerated()), id: \.offset) { offset, slot in
+                        if entry.tomorrowStartIndex == entry.upcomingStart + offset {
+                            HStack {
+                                Text("Tomorrow")
+                                    .font(.system(size: 9))
+                                    .foregroundStyle(.secondary)
+                                Spacer()
+                            }
+                            .padding(.top, 2)
+                        }
                         HStack {
                             Text(timeFormatter.string(from: slot.validFrom))
                                 .font(.system(.caption2, design: .monospaced))
