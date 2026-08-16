@@ -209,7 +209,12 @@ struct LargeWidgetView: View {
                             .foregroundStyle(.primary.opacity(0.4))
                             .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 2]))
                             .annotation(position: .top, alignment: .leading) {
-                                Text("now").font(.system(size: 8)).foregroundStyle(.secondary)
+                                // On a rolling window the graph already starts at the
+                                // current slot, so the label adds nothing the header
+                                // doesn't say — and it would land on "tomorrow".
+                                if entry.currentIndex > 0 {
+                                    Text("now").font(.system(size: 8)).foregroundStyle(.secondary)
+                                }
                             }
                     }
                     if let boundary = entry.tomorrowStartIndex {
@@ -245,6 +250,9 @@ struct LargeWidgetView: View {
                 }
                 .chartYScale(domain: entry.yDomain)
                 .frame(height: 150)
+                // Rule annotations are drawn above the plot area, outside the
+                // chart's frame; without this they sit on the region label.
+                .padding(.top, 10)
 
                 Divider()
 
