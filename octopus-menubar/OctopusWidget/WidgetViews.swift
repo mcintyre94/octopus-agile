@@ -54,6 +54,10 @@ struct SmallWidgetView: View {
                 Text(String(format: "%.2fp", slot.valueIncVat))
                     .font(.title)
                     .fontWeight(.bold)
+                    .lineLimit(1)
+                    // The widget is sized by the OS, not by us; shrink rather
+                    // than truncate when the price doesn't fit.
+                    .minimumScaleFactor(0.5)
                     .foregroundStyle(PriceCategory.from(slot.valueIncVat).color)
                 Text(timeFormatter.string(from: slot.validFrom))
                     .font(.caption2)
@@ -66,8 +70,6 @@ struct SmallWidgetView: View {
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
-
-            Spacer()
 
             // Mini sparkline of the next 6 slots, which may run into tomorrow
             if !upcomingSlots.isEmpty {
@@ -87,9 +89,15 @@ struct SmallWidgetView: View {
                 }
                 .chartXAxis(.hidden)
                 .chartYAxis(.hidden)
-                .frame(height: 30)
+                // Without an explicit domain the automatic one pads past the
+                // last bar, leaving the sparkline hugging the left edge.
+                .chartXScale(domain: -0.5...(Double(upcomingSlots.count) - 0.5))
+                // Fill whatever height is left rather than a fixed 30pt, which
+                // leaves the sparkline stranded on the taller iPad widget.
+                .frame(minHeight: 30, maxHeight: .infinity)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(12)
         .containerBackground(.fill.tertiary, for: .widget)
     }
@@ -149,7 +157,7 @@ struct MediumWidgetView: View {
                         AxisValueLabel {
                             if let i = value.as(Int.self), i < entry.slots.count {
                                 Text(hourFormatter.string(from: entry.slots[i].validFrom))
-                                    .font(.system(size: 8))
+                                    .font(.caption2)
                             }
                         }
                     }
@@ -232,7 +240,7 @@ struct LargeWidgetView: View {
                         AxisValueLabel {
                             if let i = value.as(Int.self), i < entry.slots.count {
                                 Text(hourFormatter.string(from: entry.slots[i].validFrom))
-                                    .font(.system(size: 9))
+                                    .font(.caption2)
                             }
                         }
                     }
@@ -243,13 +251,15 @@ struct LargeWidgetView: View {
                         AxisValueLabel {
                             if let v = value.as(Double.self) {
                                 Text("\(v, format: .number.precision(.fractionLength(0)))p")
-                                    .font(.system(size: 9))
+                                    .font(.caption2)
                             }
                         }
                     }
                 }
                 .chartYScale(domain: entry.yDomain)
-                .frame(height: 150)
+                // Take whatever the upcoming-slot list leaves. A fixed height
+                // was tuned for the iPhone and stranded the chart on iPad.
+                .frame(minHeight: 130, maxHeight: .infinity)
                 // Rule annotations are drawn above the plot area, outside the
                 // chart's frame; without this they sit on the region label.
                 .padding(.top, 10)
