@@ -28,6 +28,14 @@ struct MenuBarView: View {
                 )
                 .tabItem { Label("Tomorrow", systemImage: "moon.stars") }
                 .tag(1)
+
+                ForecastView(
+                    forecast: viewModel.mergedForecast,
+                    isLoading: viewModel.isLoadingForecast,
+                    error: viewModel.forecastError
+                )
+                .tabItem { Label("7 Day", systemImage: "calendar") }
+                .tag(2)
             }
         }
         .frame(width: 420)
@@ -49,7 +57,7 @@ struct MenuBarView: View {
 
             Spacer()
 
-            if viewModel.isLoadingToday || viewModel.isLoadingTomorrow {
+            if viewModel.isLoadingToday || viewModel.isLoadingTomorrow || viewModel.isLoadingForecast {
                 ProgressView().scaleEffect(0.6)
                     .frame(width: 20, height: 20)
             } else {

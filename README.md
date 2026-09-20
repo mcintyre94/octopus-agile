@@ -1,6 +1,6 @@
 # Octopus Agile Prices
 
-A macOS menubar app and iOS app that shows [Octopus Energy Agile](https://octopus.energy/agile/) half-hourly electricity prices as a bar chart. Includes an iOS home screen widget.
+A macOS menubar app and iOS app that shows [Octopus Energy Agile](https://octopus.energy/agile/) half-hourly electricity prices as a bar chart, plus a 7-day price forecast. Includes iOS home screen widgets.
 
 ## macOS
 
@@ -21,9 +21,11 @@ A macOS menubar app and iOS app that shows [Octopus Energy Agile](https://octopu
 - Current time slot highlighted with a "now" marker
 - Tooltips showing the price and time for each bar (hover on macOS, tap-and-drag on iOS)
 - Price table listing all 48 slots
+- 7-day tab with predicted prices: a line coloured by the same price bands, the p10–p90 uncertainty band shaded behind it, and a per-day table of the cheapest slot, daily average and peak
 - Region picker for all 14 UK DNO regions (A–P)
-- iOS home screen widget in small, medium, and large sizes with configurable region
-- Widgets roll forward once tomorrow's prices are published (usually around 4pm): the graph switches from midnight-to-midnight today to the current slot through to the end of tomorrow, with the day change marked
+- Two iOS home screen widgets in small, medium, and large sizes, each with a configurable region:
+  - **Agile Prices** — today's confirmed prices. Rolls forward once tomorrow's prices are published (usually around 4pm): the graph switches from midnight-to-midnight today to the current slot through to the end of tomorrow, with the day change marked
+  - **Agile 7-Day Forecast** — the week ahead. Small picks out the cheapest day, medium and large show the full forecast graph
 
 ## Requirements
 
@@ -42,4 +44,6 @@ The macOS app runs as a menubar-only process (no Dock icon). Click the ⚡ bolt 
 
 ## Data
 
-Prices are fetched from the [Octopus Energy API](https://developer.octopus.energy/guides/rest/api-endpoints/#agile-prices) for the `AGILE-24-10-01` product. Tomorrow's prices are typically published around 4pm each day.
+Confirmed prices are fetched from the [Octopus Energy API](https://developer.octopus.energy/guides/rest/api-endpoints/#agile-prices) for the `AGILE-24-10-01` product. Tomorrow's prices are typically published around 4pm each day.
+
+Predictions beyond that come from the [AgilePredict API](https://agilepredict.com/v2/api_how_to/), which is public and needs no key. Where a confirmed Octopus price already exists for a slot, it replaces the prediction, so the 7-day view agrees with the Today and Tomorrow tabs; only the genuinely predicted slots carry an uncertainty band.

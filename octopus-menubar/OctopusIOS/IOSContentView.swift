@@ -26,6 +26,14 @@ struct IOSContentView: View {
                 )
                 .tabItem { Label("Tomorrow", systemImage: "moon.stars") }
                 .tag(1)
+
+                ForecastView(
+                    forecast: viewModel.mergedForecast,
+                    isLoading: viewModel.isLoadingForecast,
+                    error: viewModel.forecastError
+                )
+                .tabItem { Label("7 Day", systemImage: "calendar") }
+                .tag(2)
             }
             .navigationTitle("Agile Prices")
             .navigationBarTitleDisplayMode(.inline)
@@ -43,7 +51,7 @@ struct IOSContentView: View {
                 }
 
                 ToolbarItem(placement: .topBarTrailing) {
-                    if viewModel.isLoadingToday || viewModel.isLoadingTomorrow {
+                    if viewModel.isLoadingToday || viewModel.isLoadingTomorrow || viewModel.isLoadingForecast {
                         ProgressView().scaleEffect(0.8)
                     } else {
                         Button {

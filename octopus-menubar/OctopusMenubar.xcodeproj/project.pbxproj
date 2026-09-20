@@ -56,7 +56,9 @@
 		F267D0872F786093005C2452 /* Exceptions for "octopus-menubar" folder in "OctopusIOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AgilePredictService.swift,
 				ChartView.swift,
+				ForecastView.swift,
 				MenuBarView.swift,
 				Models.swift,
 				OctopusService.swift,
@@ -68,6 +70,7 @@
 		F267D08A2F7860B4005C2452 /* Exceptions for "octopus-menubar" folder in "OctopusWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AgilePredictService.swift,
 				Models.swift,
 				OctopusService.swift,
 			);

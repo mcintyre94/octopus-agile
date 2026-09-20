@@ -58,10 +58,14 @@ enum Region: String, CaseIterable, Identifiable {
 enum PriceCategory {
     case negative, low, medium, high
 
+    /// Band boundaries in p/kWh inc. VAT.
+    static let lowThreshold  = 15.0
+    static let highThreshold = 30.0
+
     static func from(_ pence: Double) -> PriceCategory {
-        if pence < 0  { return .negative }
-        if pence < 15 { return .low }
-        if pence < 30 { return .medium }
+        if pence < 0              { return .negative }
+        if pence < lowThreshold   { return .low }
+        if pence < highThreshold  { return .medium }
         return .high
     }
 
@@ -72,5 +76,30 @@ enum PriceCategory {
         case .medium:   return .orange
         case .high:     return .red
         }
+    }
+
+    /// A bottom-to-top gradient over a price axis, with hard stops where the
+    /// bands change. Lets a single line carry the same colour coding the bars
+    /// use, instead of being split into one series per band.
+    static func gradient(over domain: ClosedRange<Double>) -> LinearGradient {
+        let span = domain.upperBound - domain.lowerBound
+        func location(_ price: Double) -> Double {
+            guard span > 0 else { return 0 }
+            return min(max((price - domain.lowerBound) / span, 0), 1)
+        }
+        return LinearGradient(
+            stops: [
+                .init(color: PriceCategory.negative.color, location: 0),
+                .init(color: PriceCategory.negative.color, location: location(0)),
+                .init(color: PriceCategory.low.color,      location: location(0)),
+                .init(color: PriceCategory.low.color,      location: location(lowThreshold)),
+                .init(color: PriceCategory.medium.color,   location: location(lowThreshold)),
+                .init(color: PriceCategory.medium.color,   location: location(highThreshold)),
+                .init(color: PriceCategory.high.color,     location: location(highThreshold)),
+                .init(color: PriceCategory.high.color,     location: 1)
+            ],
+            startPoint: .bottom,
+            endPoint: .top
+        )
     }
 }
