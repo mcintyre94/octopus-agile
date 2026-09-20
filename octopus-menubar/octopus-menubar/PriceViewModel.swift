@@ -26,6 +26,10 @@ final class PriceViewModel: ObservableObject {
 
     private var slotTimer: AnyCancellable?
 
+    /// Region and moment of the last refresh that was allowed through.
+    private var lastRefresh: (region: Region, at: Date)?
+    private static let refreshCoalesceWindow: TimeInterval = 2
+
     init() {
         // Tick every 60s so currentSlotIndex stays accurate
         slotTimer = Timer.publish(every: 60, on: .main, in: .common)
@@ -57,6 +61,20 @@ final class PriceViewModel: ObservableObject {
     }
 
     func refresh() {
+        let now = Date()
+        // At launch the scene reaches .active a few tens of milliseconds
+        // after the view appears, and both ask for a refresh. Collapse the
+        // pair rather than fetching everything twice.
+        //
+        // Keyed on the region as well as the time: a region change has to go
+        // through however fast it follows the last refresh, or the tabs would
+        // keep showing the region you just switched away from.
+        if let last = lastRefresh, last.region == region,
+           now.timeIntervalSince(last.at) < Self.refreshCoalesceWindow {
+            return
+        }
+        lastRefresh = (region, now)
+
         Task { await fetchToday() }
         Task { await fetchTomorrow() }
         Task { await fetchForecast() }

@@ -3,6 +3,7 @@ import SwiftUI
 struct IOSContentView: View {
     @EnvironmentObject var viewModel: PriceViewModel
     @State private var selectedTab: Int = 0
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         NavigationStack {
@@ -64,5 +65,11 @@ struct IOSContentView: View {
             }
         }
         .onAppear { viewModel.refresh() }
+        // Prices go stale while the app sits in the background — tomorrow's
+        // are published around 4pm, which is exactly the sort of moment you'd
+        // pick the phone back up for.
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { viewModel.refresh() }
+        }
     }
 }
